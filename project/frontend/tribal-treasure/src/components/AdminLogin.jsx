@@ -5,8 +5,8 @@ import { useNavigate } from "react-router-dom"; // Importing Link for routing
 
 function AdminLogin() {
   const [formData, setFormData] = useState({
-    username: "",
-    password: ""
+    ausername: "",
+    apassword: ""
   });
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
@@ -24,6 +24,7 @@ function AdminLogin() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      console.log(formData)
       const response = await axios.post("http://localhost:1981/checkadminlogin", formData);
       if (response.status === 200) {
         setMessage("Login successful!");
@@ -54,16 +55,16 @@ function AdminLogin() {
           <input  
             type="text"
             placeholder="Username"
-            name="username"
-            value={formData.username}
+            name="ausername"
+            value={formData.ausername}
             onChange={handleChange}
             required
           />
           <input
             type="password"
             placeholder="Password"
-            name="password"
-            value={formData.password}
+            name="apassword"
+            value={formData.apassword}
             onChange={handleChange}
             required
           />
@@ -72,7 +73,7 @@ function AdminLogin() {
               <input type="checkbox" />
               Remember me
             </label>
-            <a href="#">Forgot your password?</a>
+            
           </div>
           <button type="submit">Sign in</button>
         </form>

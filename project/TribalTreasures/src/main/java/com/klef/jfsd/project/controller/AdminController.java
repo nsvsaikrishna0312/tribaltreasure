@@ -3,6 +3,7 @@ package com.klef.jfsd.project.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -54,21 +55,20 @@ public class AdminController {
 	}
 
     
-    @PostMapping("checkadminlogin")
-    public ResponseEntity<String> checkadminlogin(HttpServletRequest request) {
-    	String ausername=request.getParameter("ausername");
-    	String apassword=request.getParameter("apassword");
-    	
-    	Admin a=adminService.checkadminlogin(ausername, apassword);
-    	if(a!=null) {
-			return ResponseEntity.ok("Login Successful");
-		}
-		else {
-			return ResponseEntity.ok("Login Unsuccessful");
-			
-		}
-		
-    }
+    
+	@PostMapping("checkadminlogin")
+	public ResponseEntity<?> checkadminlogin(@RequestBody Admin an) {
+
+	    System.out.print(an.getApassword() + an.getAusername());
+
+	    Admin a = adminService.checkadminlogin(an.getAusername(), an.getApassword());
+	    if (a != null) {
+	        return ResponseEntity.ok("Login Successful");
+	    } else {
+	        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
+	    }
+	}
+
     
     @PutMapping("/updateartisan")
     public ResponseEntity<String> updateartisan(@RequestParam("aaid") int aid,@RequestBody Artisan aa){

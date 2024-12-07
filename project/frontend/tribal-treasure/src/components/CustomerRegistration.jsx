@@ -1,6 +1,8 @@
 import React, { useState } from "react";
-import axios from "axios"; // Import axios
-import "../styles/customerlogin.css"; 
+import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import "../styles/customerlogin.css";
 
 function CustomerRegistration() {
   const [formData, setFormData] = useState({
@@ -12,40 +14,141 @@ function CustomerRegistration() {
     cemail: "",
     cphonenumber: "",
     cpassword: "",
-    caddress: ""
+    caddress: "",
+    confirmPassword: "",
+    terms: false
   });
-  const [message, setMessage] = useState("");
 
-  
+  const [passwordStrength, setPasswordStrength] = useState("");
+
+  // Helper functions for validation
+  const isOnlyLetters = (value) => /^[A-Za-z\s]+$/.test(value);
+  const isValidEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  const isValidPhone = (value) => /^[6-9]\d{9}$/.test(value);
+
+  const validatePasswordStrength = (password) => {
+    if (password.length < 6) return "Weak";
+    if (password.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).*$/)) return "Strong";
+    return "Moderate";
+  };
+
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value, type, checked } = e.target;
+
+    // Update password strength dynamically
+    if (name === "cpassword") {
+      const strength = validatePasswordStrength(value);
+      setPasswordStrength(strength);
+    }
+
     setFormData((prevData) => ({
       ...prevData,
-      [name]: value
+      [name]: type === "checkbox" ? checked : value
     }));
   };
 
-  
-  const handleSubmit = async (e) => {
-    try {
-     e.preventDefault()
-     const response=await axios.post("http://localhost:1981/insertcustomer",formData)
-     if(response.status==200){
-         setMessage(response.data)
-     }
-
-    } catch (error) {
-     setMessage(error.message)
-
+  const validateForm = () => {
+    if (!isOnlyLetters(formData.cfname)) {
+      toast.error("First Name must contain only letters.");
+      return false;
     }
- };
+
+    if (!isOnlyLetters(formData.clname)) {
+      toast.error("Last Name must contain only letters.");
+      return false;
+    }
+
+    if (formData.cusername.trim().length < 4) {
+      toast.error("Username must be at least 4 characters long.");
+      return false;
+    }
+
+    if (!isValidEmail(formData.cemail)) {
+      toast.error("Invalid email format. Please enter a valid email.");
+      return false;
+    }
+
+    if (!isValidPhone(formData.cphonenumber)) {
+      toast.error("Phone Number must be 10 digits and start with 6, 7, 8, or 9.");
+      return false;
+    }
+
+    if (passwordStrength === "Weak") {
+      toast.error(
+        "Password is too weak! Use at least 6 characters, including upper/lower case and numbers."
+      );
+      return false;
+    }
+
+    if (formData.cpassword !== formData.confirmPassword) {
+      toast.error("Passwords do not match.");
+      return false;
+    }
+
+    if (formData.cdob === "") {
+      toast.error("Date of Birth is required.");
+      return false;
+    }
+
+    if (formData.cgender === "") {
+      toast.error("Please select a gender.");
+      return false;
+    }
+
+    if (formData.caddress.trim().length < 10) {
+      toast.error("Address must be at least 10 characters long.");
+      return false;
+    }
+
+    if (!formData.terms) {
+      toast.error("You must agree to the Terms of Service and Privacy Policy.");
+      return false;
+    }
+
+    return true;
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    // Validate form data
+    if (!validateForm()) {
+      return;
+    }
+
+    try {
+      const response = await axios.post("http://localhost:1981/insertcustomer", formData);
+      if (response.status === 200) {
+        toast.success(response.data || "Account created successfully!");
+        // Reset form data
+        setFormData({
+          cfname: "",
+          clname: "",
+          cusername: "",
+          cdob: "",
+          cgender: "",
+          cemail: "",
+          cphonenumber: "",
+          cpassword: "",
+          caddress: "",
+          confirmPassword: "",
+          terms: false
+        });
+        setPasswordStrength("");
+      }
+    } catch (error) {
+      toast.error(error.response?.data || "An error occurred while creating the account.");
+    }
+  };
+
   return (
     <div className="customer">
-      {
-                message?
-                <p>{message}</p>:
-                <p></p>
-            }
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        className="custom-toast-container"
+        toastClassName="custom-toast"
+      />
       <div className="container">
         <h1>Create your account</h1>
         <p>
@@ -135,12 +238,17 @@ function CustomerRegistration() {
             onChange={handleChange}
             required
           />
+          <p className={`password-strength ${passwordStrength.toLowerCase()}`} style={{justifySelf:"left"}}>
+            Password Strength: {passwordStrength}
+          </p>
 
           <label htmlFor="confirm-password">Confirm Password</label>
           <input
             type="password"
             id="confirm-password"
-            name="confirm-password"
+            name="confirmPassword"
+            value={formData.confirmPassword}
+            onChange={handleChange}
             required
           />
 
@@ -155,7 +263,14 @@ function CustomerRegistration() {
           />
 
           <div className="checkbox-container">
-            <input type="checkbox" id="terms" name="terms" required />
+            <input
+              type="checkbox"
+              id="terms"
+              name="terms"
+              checked={formData.terms}
+              onChange={handleChange}
+              required
+            />
             <label htmlFor="terms">
               I agree to the <a href="#">Terms of Service</a> and{" "}
               <a href="#">Privacy Policy</a>

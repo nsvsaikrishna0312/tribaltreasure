@@ -77,7 +77,7 @@ function CustomerLogin() {
               <input type="checkbox" />
               Remember me
             </label>
-            <a href="#">Forgot your password?</a>
+           
           </div>
           <button type="submit">Sign in</button>
         </form>

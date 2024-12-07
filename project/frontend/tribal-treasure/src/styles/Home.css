@@ -15,17 +15,16 @@ body, html {
 
 
 .home {
-    position:fixed;
+    position: relative;
     flex: 1; 
     font-family: 'Roboto', sans-serif;
     padding: 0px;
     box-sizing: border-box; 
     overflow: hidden;
-    margin-left:14.8%;
+    margin-left:14.9%;
     margin-top: -1%;
 }
 
-/* Home Hero Section */
 .home-hero {
     background-image: url('https://img.freepik.com/free-photo/earthenware-pottery-vase-with-terracotta-decoration-outdoors-generated-by-ai_188544-38930.jpg');
     background-size: cover;
