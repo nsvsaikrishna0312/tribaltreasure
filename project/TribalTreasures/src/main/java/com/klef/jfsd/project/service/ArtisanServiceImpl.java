@@ -1,5 +1,7 @@
 package com.klef.jfsd.project.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -26,4 +28,9 @@ public class ArtisanServiceImpl implements ArtisanService{
 		return artisanRepository.checkartisanlogin(aausername, aapassword);
 	}
 
-}
+	@Override
+	public Artisan getArtisanById(int aid) {
+		
+		return artisanRepository.findById(aid).get();
+
+}}

@@ -52,6 +52,7 @@ public class Artisan {
 
     @Column(name = "artisan_registration_date", nullable = false, updatable = false)
     private Date aaregistrationDate;
+    
 
     public Artisan() {
         this.aaregistrationDate = new Date(System.currentTimeMillis());

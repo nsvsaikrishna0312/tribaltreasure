@@ -38,32 +38,41 @@ function ArtisanAddProduct() {
   const handleSubmit = async (e) => {
     e.preventDefault();
   
+    const formDataToSend = new FormData();
   
-    const productData = {
-      pname: formData.pname,
-      pdescription: formData.pdescription,
-      pprice: formData.pprice,
-      pcategory: formData.pcategory,
-      pisActive: formData.pisActive,
-      prating: formData.prating,
-      aid: artisanId,
-      pimage: formData.pimage
-    };
+    // Append JSON data as a string
+    formDataToSend.append(
+      "productData",
+      new Blob([JSON.stringify({
+        pname: formData.pname,
+        pdescription: formData.pdescription,
+        pprice: formData.pprice,
+        pcategory: formData.pcategory,
+        pisActive: formData.pisActive,
+        prating: formData.prating,
+        aid: artisanId,
+      })], { type: "application/json" })
+    );
+    
   
+    // Append the file
+    if (formData.pimage) {
+      formDataToSend.append("file", formData.pimage);
+    }
   
     try {
-      const response = await axios.post("http://localhost:1981/insertproduct",productData,
+      const response = await axios.post(
+        "http://localhost:1981/insertproduct",
+        formDataToSend,
         {
           headers: {
             "Content-Type": "multipart/form-data",
           },
         }
       );
-      console.log(response.status)
   
       if (response.status === 201) {
         setMessage("Product added successfully!");
-
         setFormData({
           pname: "",
           pdescription: "",
@@ -79,6 +88,7 @@ function ArtisanAddProduct() {
       setMessage(`Error: ${error.response?.data?.message || error.message}`);
     }
   };
+  
   
 
   return (

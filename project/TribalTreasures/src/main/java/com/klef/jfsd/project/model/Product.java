@@ -23,14 +23,29 @@ public class Product {
     @Column(name = "product_price", nullable = false)
     private BigDecimal pprice;
 
-    @Column(name = "product_image", nullable = true)
-    private Blob pimage;
-
+    @Lob
+    @Basic(fetch = FetchType.LAZY) // Lazy loading for performance
+    @Column(name = "product_image", columnDefinition = "LONGBLOB") // Specify column type
+    private byte[] pimage;
     @ManyToOne
     @JoinColumn(name = "artisan_id", nullable = false)
-    private Artisan aid;
+    private Artisan artisan;
+    
+    
+    private int aid; 
+    
+    @Column(name="image_type",nullable=false)
+    private String ImageType;
 
-    @Column(name = "rating", precision = 3, scale = 2)
+    public String getImageType() {
+		return ImageType;
+	}
+
+	public void setImageType(String imageType) {
+		ImageType = imageType;
+	}
+
+	@Column(name = "rating", precision = 3, scale = 2)
     private BigDecimal prating;
     
     @Column(name = "product_category", length = 50, nullable = false)
@@ -43,7 +58,10 @@ public class Product {
     @Column(name = "is_active", nullable = false)
     private boolean pisActive;
 
-    public Product() {}
+    public Product() {
+        this.padddate = new Date(System.currentTimeMillis());
+
+    }
 
 	public int getPid() {
 		return pid;
@@ -77,20 +95,28 @@ public class Product {
 		this.pprice = pprice2;
 	}
 
-	public Blob getPimage() {
+	public byte[] getPimage() {
 		return pimage;
 	}
 
-	public void setPimage(Blob pimage) {
+	public void setPimage(byte[] pimage) {
 		this.pimage = pimage;
 	}
 
-	public Artisan getAid() {
+	public int getAid() {
 		return aid;
 	}
 
-	public void setAid(Artisan aid) {
+	public void setAid( int aid) {
 		this.aid = aid;
+	}
+
+	public Artisan getArtisan() {
+		return artisan;
+	}
+
+	public void setArtisan(Artisan artisan) {
+		this.artisan = artisan;
 	}
 
 	public BigDecimal getPrating() {

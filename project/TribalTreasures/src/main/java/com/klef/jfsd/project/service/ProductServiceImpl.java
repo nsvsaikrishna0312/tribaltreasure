@@ -1,10 +1,12 @@
 package com.klef.jfsd.project.service;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.klef.jfsd.project.model.Product;
 import com.klef.jfsd.project.repository.ProductRepository;
@@ -16,10 +18,16 @@ public class ProductServiceImpl implements ProductService {
 	private ProductRepository productRepository;
 
 	@Override
-	public String AddProduct(Product product) 
+	public Product AddProduct(Product product,MultipartFile file) 
 	{
-		productRepository.save(product);
-		return "Product Added Successfully";
+		try {
+			product.setImageType(file.getContentType());
+			product.setPimage(file.getBytes());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return productRepository.save(product);
 	}
 	
 	 @Override
@@ -38,6 +46,12 @@ public class ProductServiceImpl implements ProductService {
 	            return "Product with ID " + pid + " not found.";
 	        }  
 	    }
+	  
+	  @Override
+		public Product ViewProductByID(int pid) 
+		{
+			return productRepository.findById(pid).get();
+		}
 
 	    @Override
 	      public String updateProduct(int pid, Product updatedProduct) {
@@ -59,6 +73,11 @@ public class ProductServiceImpl implements ProductService {
 	              return "Product with ID " + pid + " not found.";
 	          }
 	      }
+
+		@Override
+		public Product getProductById(int pid) {
+			return productRepository.findById(pid).get();
+		}
 	    
 	
 

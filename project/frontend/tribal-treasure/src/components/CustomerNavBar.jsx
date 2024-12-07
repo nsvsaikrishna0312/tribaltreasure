@@ -11,7 +11,7 @@ export default function CustomerNavBar() {
       <Link to="/customerhome">Home</Link>
       <Link to="/customer/products">Products</Link>
       <Link to="/customer/artisans">Artisans</Link>
-      <Link to="/customer/cart">Cart</Link>
+      
       <Link to="/customer/aboutus">About</Link>
       <Link to="/customer/contactus">Contact</Link>
       <Link to='/customer/profile'>Profile</Link>
