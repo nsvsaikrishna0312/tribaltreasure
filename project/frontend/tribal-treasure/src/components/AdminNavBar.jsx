@@ -17,8 +17,8 @@ export default function AdminNavBar() {
       <Link to="/admin/deleteartisan">Delete Artisan</Link>
       <Link to="/admin/updateartisan">Update Artisan</Link>
       <Link to="/admin/viewallproducts">View All Products</Link>
-      <Link to="/admin/deleteproduct">Delete Product</Link>
-      <Link to="/admin/updateproduct">Update Product</Link>
+      {/* <Link to="/admin/deleteproduct">Delete Product</Link> */}
+      {/* <Link to="/admin/updateproduct">Update Product</Link> */}
       <Link to="/admin/viewallcustomers">View All Customers</Link>
       <Link to="/admin/deletecustomer">Delete Customer</Link>
       <Link to="/admin/updatecustomer">Update Customer</Link>

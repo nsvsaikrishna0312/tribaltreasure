@@ -25,7 +25,7 @@ function ArtisanLogin() {
     e.preventDefault();
     try {
       console.log(formData)
-      const response = await axios.post("http://localhost:1981/checkartisanlogin", formData);
+      const response = await axios.post("https://impartial-surprise-production-2ca1.up.railway.app/checkartisanlogin", formData);
       if (response.status === 200) {
         setMessage("Login successful!");
         

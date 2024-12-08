@@ -21,8 +21,7 @@ export default function NavBar() {
         <div className="sidebar">
           <h1>Tribal Treasure</h1>
           <Link to="/"><i className="fas fa-home"></i>Home</Link>
-          <Link to="#"><i className="fas fa-th-large"></i>Categories</Link>
-          <Link to="#"><i className="fas fa-tags"></i>Offers</Link>
+          
           <Link to="/aboutus"><i className="fas fa-info-circle"></i>About Us</Link>
           <Link to="/contact"><i className="fas fa-phone"></i>Contact</Link>
 

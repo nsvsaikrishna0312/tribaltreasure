@@ -24,7 +24,7 @@ function CustomerLogin() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:1981/checkcustomerlogin", formData);
+      const response = await axios.post("https://impartial-surprise-production-2ca1.up.railway.app/checkcustomerlogin", formData);
       if (response.status === 200) {
         setMessage("Login successful!");
         const customerInfo = response.data; 

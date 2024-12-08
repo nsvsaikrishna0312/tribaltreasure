@@ -22,7 +22,7 @@ export default function AdminUpdateCustomer() {
 
   const fetchCustomers = async () => {
     try {
-      const response = await axios.get("http://localhost:1981/viewallcustomers");
+      const response = await axios.get("https://impartial-surprise-production-2ca1.up.railway.app/viewallcustomers");
       setData(response.data);
       setFilteredData(response.data); 
     } catch (error) {

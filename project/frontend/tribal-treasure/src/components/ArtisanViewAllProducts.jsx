@@ -11,14 +11,14 @@ const ArtisanViewAllProducts = () => {
     const fetchProductsAndImages = async () => {
       try {
         // Fetch all products
-        const productsResponse = await fetch("http://localhost:1981/viewallproducts");
+        const productsResponse = await fetch("https://impartial-surprise-production-2ca1.up.railway.app/viewallproducts");
         const productsData = await productsResponse.json();
         setProducts(productsData);
 
         // Fetch images for each product
         const imagePromises = productsData.map(async (product) => {
           try {
-            const imageResponse = await fetch(`http://localhost:1981/product/${product.pid}`);
+            const imageResponse = await fetch(`https://impartial-surprise-production-2ca1.up.railway.app/product/${product.pid}`);
             const imageBlob = await imageResponse.blob();
             return {
               pid: product.pid,

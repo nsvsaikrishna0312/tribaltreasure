@@ -10,7 +10,7 @@ export default function AdminViewAllArtisans() {
 
   const fetchArtisans = async () => {
     try {
-      const response = await axios.get("http://localhost:1981/viewallartisans");
+      const response = await axios.get("https://impartial-surprise-production-2ca1.up.railway.app/viewallartisans");
       setData(response.data);
       setFilteredData(response.data); 
     } catch (error) {

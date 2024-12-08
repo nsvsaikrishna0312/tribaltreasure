@@ -25,7 +25,7 @@ function AdminLogin() {
     e.preventDefault();
     try {
       console.log(formData)
-      const response = await axios.post("http://localhost:1981/checkadminlogin", formData);
+      const response = await axios.post("https://impartial-surprise-production-2ca1.up.railway.app/checkadminlogin", formData);
       if (response.status === 200) {
         setMessage("Login successful!");
         navigate('/adminhome')

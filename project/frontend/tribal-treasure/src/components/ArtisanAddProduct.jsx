@@ -62,7 +62,7 @@ function ArtisanAddProduct() {
   
     try {
       const response = await axios.post(
-        "http://localhost:1981/insertproduct",
+        "https://impartial-surprise-production-2ca1.up.railway.app/insertproduct",
         formDataToSend,
         {
           headers: {

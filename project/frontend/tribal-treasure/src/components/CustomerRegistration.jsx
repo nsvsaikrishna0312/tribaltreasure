@@ -117,7 +117,7 @@ function CustomerRegistration() {
     }
 
     try {
-      const response = await axios.post("http://localhost:1981/insertcustomer", formData);
+      const response = await axios.post("https://impartial-surprise-production-2ca1.up.railway.app/insertcustomer", formData);
       if (response.status === 200) {
         toast.success(response.data || "Account created successfully!");
         // Reset form data

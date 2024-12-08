@@ -14,8 +14,8 @@ export default function ArtisanNavBar() {
       <Link to="/artisanhome">Home</Link>
       <Link to="/artisan/addproduct">Add Product</Link>
       <Link to="/artisan/viewallproducts">View All Products</Link>
-      <Link to="/artisan/deleteproduct">Delete Product</Link>
-      <Link to="/artisan/updateProduct">Update Product</Link>
+      {/* <Link to="/artisan/deleteproduct">Delete Product</Link> */}
+      {/* <Link to="/artisan/updateProduct">Update Product</Link> */}
       <Link to="/artisan/aboutus">About Us</Link>
       <Link to="/artisan/contactus">Contact Us</Link>
       <Link to='/artisan/profile'>Profile</Link>

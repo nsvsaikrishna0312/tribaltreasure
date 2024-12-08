@@ -118,7 +118,7 @@ function ArtisanRegistration() {
     }
 
     try {
-      const response = await axios.post("http://localhost:1981/insertartisan", formData);
+      const response = await axios.post("https://impartial-surprise-production-2ca1.up.railway.app/insertartisan", formData);
       if (response.status === 200) {
         toast.success(response.data || "Artisan added successfully!");
         setFormData({
